@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
+import 'dart:async';
 
 
 void main() {
@@ -65,349 +64,371 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-      return false; // 뒤로가기를 처리하지 않도록 함
-    },
-    child: Scaffold(
+          return false; // 뒤로가기를 처리하지 않도록 함
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 0.0,
+            title: Text(''),
+            backgroundColor: Color(0XFF151515),
+            elevation: 0,
+          ),
+          body: Container(
+            color: Color(0xff151515),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/PerpleSpace_Logo.png',
+                      width: 40, height: 40),
+                  SizedBox(height: 10),
+                  Text(
+                    'Perple Space',
+                    style: TextStyle(
+                      color: Color(0xFF8163E0),
+                      fontSize: 20,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w500,
+                      height: 0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+}
+
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+
+  @override
+  Widget build(BuildContext context) {
+    final buttonWidth = MediaQuery.of(context).size.width - 40;
+
+    return WillPopScope(
+        onWillPop: () async {
+          bool exit = await showExitDialog(context); // 다이얼로그를 표시하고 사용자의 선택을 기다립니다.
+          return exit; // 사용자가 종료를 선택하면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
+        },
+    child:Scaffold(
       appBar: AppBar(
         toolbarHeight: 0.0,
         title: Text(''),
         backgroundColor: Color(0XFF151515),
         elevation: 0,
+        actions: [],
       ),
       body: Container(
         color: Color(0xff151515),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/PerpleSpace_Logo.png',width: 40,height: 40),
-              SizedBox(height: 10),
-              Text(
-                'Perple Space',
-                style: TextStyle(
-                  color: Color(0xFF8163E0),
-                  fontSize: 20,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w500,
-                  height: 0,
+        child: Column(
+          children: [
+            SizedBox(height: 120),
+            Image.asset('assets/PerpleSpace_Logo.png', height: 100, width: 100),
+            SizedBox(height: 10),
+            Text(
+              '환영합니다:)\n이곳은 Perple Space입니다.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF555555),
+                fontSize: 16,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w500,
+                height: 0,
+              ),
+            ),
+            Spacer(),
+            Align(
+              alignment: Alignment.bottomCenter, // 하단 중앙 정렬
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 10.0), // 하단 간격 설정
+                child: Container(
+                  margin: EdgeInsets.only(
+                      right: 40, left: 40, top: 0, bottom: 0), // 박스 바깥쪽 여백 설정
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  PiecePage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                                opacity: animation, child: child);
+                          },
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0x19888888)),
+                      minimumSize:
+                          MaterialStateProperty.all(Size(buttonWidth, 100)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 0.50,
+                            color: Colors.white.withOpacity(0.3),
+                          ),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // 가로 방향으로 양쪽 정렬
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // 텍스트를 왼쪽 정렬로 설정
+                            children: [
+                              Text(
+                                '고민 해결하기',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Color(0xFF8163E0),
+                                  fontSize: 22,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                '고민 해결을 도와드릴게요.',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Color(0xFF555555),
+                                  fontSize: 16,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
+                          child: Image.asset('assets/stone_01.png',
+                              height: 40, width: 40),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    ));
-  }
-}
-
-class MainPage extends StatelessWidget {
-  DateTime? currentBackPressTime;
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final buttonWidth = MediaQuery.of(context).size.width - 40;
-
-    return WillPopScope(
-      onWillPop: () async {
-        return onWillPop(context); // Pass the context
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          toolbarHeight: 0.0,
-          title: Text(''),
-          backgroundColor: Color(0XFF151515),
-          elevation: 0,
-          actions: [],
-        ),
-        body: Container(
-          color: Color(0xff151515),
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(height: 120),
-                Image.asset('assets/PerpleSpace_Logo.png',height: 100, width: 100),
-                SizedBox(height: 10),
-                Text(
-                  '환영합니다:)\n이곳은 Perple Space입니다.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF555555),
-                    fontSize: 16,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w500,
-                    height: 0,
-                  ),
-                ),
-                Spacer(),
-                Align(
-                  alignment: Alignment.bottomCenter, // 하단 중앙 정렬
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 10.0), // 하단 간격 설정
-                    child: Container(
-                      margin: EdgeInsets.only(right: 40,left: 40,top: 0,bottom: 0), // 박스 바깥쪽 여백 설정
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) =>
-                                  PiecePage(),
-                              transitionsBuilder:
-                                  (context, animation, secondaryAnimation, child) {
-                                return FadeTransition(
-                                    opacity: animation, child: child);
-                              },
-                            ),
-                          );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                          MaterialStateProperty.all(const Color(0x19888888)),
-                          minimumSize:
-                          MaterialStateProperty.all(Size(buttonWidth, 100)),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 0.50,
-                                color: Colors.white.withOpacity(0.3),
-                              ),
-                              borderRadius: BorderRadius.circular(40),
-                            ),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween, // 가로 방향으로 양쪽 정렬
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start, // 텍스트를 왼쪽 정렬로 설정
-                                children: [
-                                  Text(
-                                    '고민 해결하기',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Color(0xFF8163E0),
-                                      fontSize: 22,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w500,
-                                      height: 0,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    '고민 해결을 도와드릴게요.',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Color(0xFF555555),
-                                      fontSize: 16,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
-                              child: Image.asset('assets/stone_01.png', height: 40, width: 40),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter, // 하단 중앙 정렬
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 10.0), // 하단 간격 설정
-                    child: Container(
-                      margin: EdgeInsets.only(right: 40,left: 40,top: 0,bottom: 0), // 박스 바깥쪽 여백 설정
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) =>
-                                  TodayPage(),
-                              transitionsBuilder:
-                                  (context, animation, secondaryAnimation, child) {
-                                return FadeTransition(
-                                    opacity: animation, child: child);
-                              },
-                            ),
-                          );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                          MaterialStateProperty.all(const Color(0x19888888)),
-                          minimumSize:
-                          MaterialStateProperty.all(Size(buttonWidth, 100)),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 0.50,
-                                color: Colors.white.withOpacity(0.3),
-                              ),
-                              borderRadius: BorderRadius.circular(40),
-                            ),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween, // 가로 방향으로 양쪽 정렬
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start, // 텍스트를 왼쪽 정렬로 설정
-                                children: [
-                                  Text(
-                                    '오늘의 운세',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Color(0xFF8163E0),
-                                      fontSize: 22,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w500,
-                                      height: 0,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    '오늘은 어떤 날 일까요?.',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Color(0xFF555555),
-                                      fontSize: 16,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
-                              child: Image.asset('assets/stone_02.png', height: 40, width: 40),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter, // 하단 중앙 정렬
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 40.0), // 하단 간격 설정
-                    child: Container(
-                      margin: EdgeInsets.only(right: 40,left: 40,top: 0,bottom: 0), // 박스 바깥쪽 여백 설정
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) =>
-                                  KnowledgePage(),
-                              transitionsBuilder:
-                                  (context, animation, secondaryAnimation, child) {
-                                return FadeTransition(
-                                    opacity: animation, child: child);
-                              },
-                            ),
-                          );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                          MaterialStateProperty.all(const Color(0x19888888)),
-                          minimumSize:
-                          MaterialStateProperty.all(Size(buttonWidth, 100)),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 0.50,
-                                color: Colors.white.withOpacity(0.3),
-                              ),
-                              borderRadius: BorderRadius.circular(40),
-                            ),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween, // 가로 방향으로 양쪽 정렬
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start, // 텍스트를 왼쪽 정렬로 설정
-                                children: [
-                                  Text(
-                                    '알고 계셨나요?',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Color(0xFF8163E0),
-                                      fontSize: 22,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w500,
-                                      height: 0,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    '매일 새로운 지식을 드려요.',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Color(0xFF555555),
-                                      fontSize: 16,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
-                              child: Image.asset('assets/stone_03.png', height: 40, width: 40),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
             ),
-          ),
+            Align(
+              alignment: Alignment.bottomCenter, // 하단 중앙 정렬
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 10.0), // 하단 간격 설정
+                child: Container(
+                  margin: EdgeInsets.only(
+                      right: 40, left: 40, top: 0, bottom: 0), // 박스 바깥쪽 여백 설정
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  TodayPage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                                opacity: animation, child: child);
+                          },
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0x19888888)),
+                      minimumSize:
+                          MaterialStateProperty.all(Size(buttonWidth, 100)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 0.50,
+                            color: Colors.white.withOpacity(0.3),
+                          ),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // 가로 방향으로 양쪽 정렬
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // 텍스트를 왼쪽 정렬로 설정
+                            children: [
+                              Text(
+                                '오늘의 운세',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Color(0xFF8163E0),
+                                  fontSize: 22,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                '오늘은 어떤 날 일까요?.',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Color(0xFF555555),
+                                  fontSize: 16,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
+                          child: Image.asset('assets/stone_02.png',
+                              height: 40, width: 40),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter, // 하단 중앙 정렬
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 40.0), // 하단 간격 설정
+                child: Container(
+                  margin: EdgeInsets.only(
+                      right: 40, left: 40, top: 0, bottom: 0), // 박스 바깥쪽 여백 설정
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  KnowledgePage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                                opacity: animation, child: child);
+                          },
+                        ),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0x19888888)),
+                      minimumSize:
+                          MaterialStateProperty.all(Size(buttonWidth, 100)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 0.50,
+                            color: Colors.white.withOpacity(0.3),
+                          ),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // 가로 방향으로 양쪽 정렬
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // 텍스트를 왼쪽 정렬로 설정
+                            children: [
+                              Text(
+                                '알고 계셨나요?',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Color(0xFF8163E0),
+                                  fontSize: 22,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                '매일 새로운 지식을 드려요.',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Color(0xFF555555),
+                                  fontSize: 16,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20.0), // 박스 내 여백 설정
+                          child: Image.asset('assets/stone_03.png',
+                              height: 40, width: 40),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
+    )
     );
   }
-
-  Future<bool> onWillPop(BuildContext context) async {
-    DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('뒤로가기 버튼을 한 번 더 누르면 앱이 종료됩니다.',style: TextStyle(color: Color(0xffffffff))),
-          behavior: SnackBarBehavior.floating, // SnackBar를 화면 하단에 띄웁니다.
-          margin: EdgeInsets.only(bottom: 10.0,left: 10,right: 10), // 하단 여백 조절
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-        ),
-      );
-      return false;
-    }
-    return true;
+  Future<bool> showExitDialog(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('앱 종료'),
+          content: Text('앱을 종료하시겠습니까?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // 취소 버튼을 누르면 false 반환
+              },
+              child: Text('취소'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // 종료 버튼을 누르면 false 반환
+                SystemNavigator.pop(); // 앱 종료
+              },
+              child: Text('종료'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -1188,7 +1209,6 @@ class _TodayPageState extends State<TodayPage> {
     myBanner.load();
   }
 
-
   // 사용자의 입력을 감지하고 버튼 상태를 업데이트
   void updateButtonState(String input) {
     if (input.isNotEmpty && int.tryParse(input) != null) {
@@ -1549,6 +1569,10 @@ class _KnowledgePageState extends State<KnowledgePage> {
     KnowledgeItem(title: '11월 4일', content: 'Knowledge for day 1'),
     KnowledgeItem(title: '11월 5일', content: 'Knowledge for day 1'),
     KnowledgeItem(title: '11월 7일', content: 'Knowledge for day 1'),
+    KnowledgeItem(title: '11월 7일', content: 'Knowledge for day 1'),
+    KnowledgeItem(title: '11월 7일', content: 'Knowledge for day 1'),
+    KnowledgeItem(title: '11월 7일', content: 'Knowledge for day 1'),
+    KnowledgeItem(title: '11월 7일', content: 'Knowledge for day 1'),
     // 나머지 29일 동안의 지식 항목 추가
   ];
 
@@ -1623,8 +1647,8 @@ class _KnowledgePageState extends State<KnowledgePage> {
                 padding: EdgeInsets.only(bottom: 20.0), // 하단 간격 설정
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
+                    Navigator.pushReplacement(
+                    context,
                       MaterialPageRoute(
                         builder: (context) => MainPage(),
                       ),
@@ -1720,4 +1744,5 @@ class GoogleAdMob {
     );
 
     return adContainer;
-  }}
+  }
+}
