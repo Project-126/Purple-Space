@@ -1,6 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.purplespace.app">
     <application
-        android:label="test010101"
+        android:label="purplespace_android"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

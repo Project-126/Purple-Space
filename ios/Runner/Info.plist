@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>GADApplicationIdentifier</key>
-    <string>앱ID key<ca-app-pub-3940256099942544~1458002511>
 	<key>CFBundleDisplayName</key>
 	<string>Test010101</string>
 	<key>CFBundleExecutable</key>

@@ -363,7 +363,7 @@ class _SolutionPage2State extends State<SolutionPage2> {
                 ),
               ),
               child: Text(
-                '결정 완료',
+                '홈',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,

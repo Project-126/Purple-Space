@@ -39,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
       home: _showSplashPage ? SplashPage() : MainPage(),
     );
   }
@@ -139,7 +140,7 @@ class _SplashPageState extends State<SplashPage> {
                       SizedBox(height: 10),
                       Center(
                         child: Text(
-                          'Perple Space',
+                          'Purple Space',
                           style: TextStyle(
                             color: Color(0xFF8163E0),
                             fontSize: 20,
@@ -228,7 +229,7 @@ class _MainPageState extends State<MainPage> {
                     height: 80, width: 80),
                 SizedBox(height: 20),
                 Text(
-                  '환영합니다:)\n이곳은 Perple Space입니다.',
+                  '환영합니다:)\n이곳은 Purple Space입니다.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xFF555555),
@@ -389,7 +390,7 @@ class _MainPageState extends State<MainPage> {
                                   ),
                                   SizedBox(height: 4),
                                   Text(
-                                    '오늘은 어떤 날 일까요?.',
+                                    '오늘은 어떤 하루일까요?.',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       color: Color(0xFF555555),
@@ -597,7 +598,7 @@ class GoogleAdMob {
   static BannerAd loadBannerAd() {
     // 배너 광고
     BannerAd myBanner = BannerAd(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      adUnitId: 'ca-app-pub-8592816665846164/5444251021',
 // 내 리워드 광고 통합 APP ID
       /*
       크기(폭x높이)        설명               AdSize 상수
@@ -652,7 +653,7 @@ class GoogleAdMob {
   static void showInterstitialAd() {
     // 전면 광고 로드
     InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/1033173712', // 내 리워드 광고 통합 APP ID
+      adUnitId: 'ca-app-pub-8592816665846164/9136084027', // 내 리워드 광고 통합 APP ID
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         // 전면 광고 로드 완료

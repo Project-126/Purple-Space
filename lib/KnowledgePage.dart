@@ -100,7 +100,7 @@ class _KnowledgePageState extends State<KnowledgePage> {
             if (currentKnowledge != null)
               Column(
                 children: [
-                  SizedBox(height: 60),
+                  SizedBox(height: 20),
                   Image.asset(
                     'assets/PerpleSpace_Logo.png',
                     width: 42,
@@ -173,7 +173,7 @@ class _KnowledgePageState extends State<KnowledgePage> {
                     ),
                   ),
                   child: Text(
-                    '습득 완료',
+                    '홈',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,

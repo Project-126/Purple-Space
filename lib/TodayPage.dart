@@ -76,7 +76,7 @@ class _TodayPageState extends State<TodayPage> {
                 children: [
                   SizedBox(height: 10),
                   Text(
-                    '원하는 숫자를 적고,\n오늘의 운세를 확인해봐요:)',
+                    '원하는 숫자를 적고,\n오늘의 운세를 확인해봐요.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF8163E0),
